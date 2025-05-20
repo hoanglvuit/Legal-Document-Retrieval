@@ -2,9 +2,10 @@ import pandas as pd
 import os 
 import argparse
 from pyvi.ViTokenizer import tokenize
-import logging
+from pathlib import Path
 from sklearn.model_selection import train_test_split
-
+from tqdm import tqdm
+tqdm.pandas()
 
 def process_context(context) : 
     return context.replace("['",'').replace("']",'')
@@ -12,8 +13,8 @@ def process_context(context) :
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process raw data")
-    parser.add_argument("--raw_path", type=str, default="data/raw", help="Folder contains raw data")
-    parser.add_argument("--processed_path", type=str, default="data/processed", help="Folder to save processed data")
+    parser.add_argument("--raw_path", type=str, default="../data/raw", help="Folder contains raw data")
+    parser.add_argument("--processed_path", type=str, default="../data/processed", help="Folder to save processed data")
     parser.add_argument("--eval_size", type=float, default=0.1)
     parser.add_argument("--random_state", type=int, default=28)
 
@@ -51,8 +52,9 @@ if __name__ == "__main__":
             if cid in corpus_cid: 
                 processed_train.append([train_question[ind], text[cid_to_index[cid]], cids]) 
             else: 
-                processed_train.append([train_question[ind], process_context(train_answer[ind], cids)])
-    seg_processed_train = [[tokenize(ques),tokenize(answer),cid] for ques,answer,cid in processed_train]
+                processed_train.append([train_question[ind], process_context(train_answer[ind]), cids])
+    seg_processed_train = [[tokenize(ques), tokenize(answer), cid] 
+    for ques, answer, cid in tqdm(processed_train, desc="Tokenizing train set")]
     train, eval = train_test_split(seg_processed_train, test_size=eval_size, random_state=random_state) 
 
     # save train and eval data 
@@ -64,7 +66,7 @@ if __name__ == "__main__":
     eval_df.to_csv(saved_eval_path,index=False)
 
     # processing corpus dataframe
-    corpus_df['text'] = corpus_df['text'].apply(tokenize)
+    corpus_df['text'] = corpus_df['text'].progress_apply(tokenize)
     saved_corpus_path = os.path.join(proc_path, 'corpus.csv')
     corpus_df.to_csv(saved_corpus_path, index=False)
 
