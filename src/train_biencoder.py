@@ -26,9 +26,8 @@ eval_dataset = Dataset.from_dict(eval_data)
 
 # Bi-encoder
 model = SentenceTransformer('bkai-foundation-models/vietnamese-bi-encoder')
-guide = SentenceTransformer("hiieu/halong_embedding")
 
-loss = losses.GISTEmbedLoss(model=model, guide = guide, margin=0.2)
+loss = losses.MultipleNegativesRankingLoss(model)
 
 
 args = SentenceTransformerTrainingArguments(
