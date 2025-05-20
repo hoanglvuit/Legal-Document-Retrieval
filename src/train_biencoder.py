@@ -25,10 +25,10 @@ if __name__ == "__main__":
     parser.add_argument("--input_dir", type=str, default="../data/processed", help="Folder contain train.csv and eval.csv") 
     parser.add_argument("--model_name", type=str, default= "bkai-foundation-models/vietnamese-bi-encoder") 
     parser.add_argument("--num_epochs", type=int, default=3) 
-    parser.add_argument("batch_size", type=int, default=32) 
-    parser.add_argument("lr", type=float, default=2e-5) 
-    parser.add_argument('weight_decay', type=float, default=0.01) 
-    parser.add_argument("output_dir", type=str, default="../saved_model/BiEncoder")
+    parser.add_argument("--batch_size", type=int, default=32) 
+    parser.add_argument("--lr", type=float, default=2e-5) 
+    parser.add_argument('--weight_decay', type=float, default=0.01) 
+    parser.add_argument("--output_dir", type=str, default="../saved_model/BiEncoder")
 
 args = parser.parse_args()
 # Load data
