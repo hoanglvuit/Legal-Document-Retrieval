@@ -30,11 +30,9 @@ if __name__ == "__main__":
     parser.add_argument('weight_decay', type=float, default=0.01) 
     parser.add_argument("output_dir", type=str, default="../saved_model/BiEncoder")
 
-
 args = parser.parse_args()
 # Load data
 train_question, train_answer, eval_question, eval_answer = load_data(args.input_dir)
-
 
 # Define dataset
 train_data = {'query': train_question,
@@ -78,7 +76,8 @@ trainer = SentenceTransformerTrainer(
     args=train_args,
     train_dataset=train_dataset,
     eval_dataset=eval_dataset,
-    loss=loss)
+    loss=loss
+)
 
 trainer.train()
 model.save_pretrained(os.path.join(args.output_dir, 'best'))
