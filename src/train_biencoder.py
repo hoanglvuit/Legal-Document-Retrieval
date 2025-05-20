@@ -50,6 +50,7 @@ args = SentenceTransformerTrainingArguments(
     greater_is_better=False,  
     logging_steps=200,
     weight_decay =0.01,
+    report_to= "none",
 )
 trainer = SentenceTransformerTrainer(
     model=model,
