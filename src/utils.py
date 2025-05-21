@@ -1,9 +1,13 @@
 import torch
 import os
 from sentence_transformers import SentenceTransformer, util
+from typing import List
 
 
 def get_candidate(question_embedding, answer_embedding, cids, num, saved_folder, name):
+    '''
+        Description: Get num candidates and save result in saved_folder with name
+    '''
     tensor = util.cos_sim(question_embedding, answer_embedding) 
     _, top_indices = torch.topk(tensor, num, dim=1)
     top_cids = [[cids[i] for i in indices] for indices in top_indices.cpu().tolist()]
@@ -21,7 +25,7 @@ def get_candidate(question_embedding, answer_embedding, cids, num, saved_folder,
 # embeddings2 = model.encode(sentence2, convert_to_tensor=True)
 # get_candidate(embeddings1, embeddings2, [1,2,3,4,5,6,7,8], 1, '.')
 
-def exist_m(prediction, true_cids, m=10): 
+def exist_m(prediction: List[List[int]], true_cids: List[List[int]], m: int=10) -> float: 
     assert len(prediction) == len(true_cids), "Must same length"
     num_exist = 0 
     for pred_cids, true_cids in zip(prediction, true_cids): 
@@ -31,7 +35,7 @@ def exist_m(prediction, true_cids, m=10):
     print(f"Exist@{m} = {exist_score}") 
     return exist_score
 
-def mrr_m(prediction, true_cids, m=10): 
+def mrr_m(prediction: List[List[int]], true_cids: List[List[int]], m: int=10) -> float: 
     assert len(prediction) == len(true_cids), "Must same length"
     mrr_num = 0 
     for pred_cids, true_cids in zip(prediction, true_cids): 
