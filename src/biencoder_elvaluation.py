@@ -2,6 +2,7 @@ from sentence_transformers import SentenceTransformer
 import argparse
 import torch
 import pandas as pd
+import os
 from .utils import get_candidate
 
 if __name__ == "__main__": 
@@ -11,10 +12,12 @@ if __name__ == "__main__":
     parser.add_argument("--train", action= "store_true", help="Whether evaluate for train csv") 
     parser.add_argument("--train_path", type=str, default=None)
     parser.add_argument("--eval_data", type=str, default="../data/processed/eval.csv")
-    parser.add_argument("--num", type=int, )
+    parser.add_argument("--num", type=int, default=100) 
+    parser.add_argument("saved_folder", type=str, default='../result/BiEncoder/model1')
 
 
 args = parser.parse_args() 
+os.makedirs(args.saved_folder, exist_ok=True)
 
 #load model 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -41,7 +44,7 @@ answer_embeddings = model.encode(document,show_process_bar=True,convert_to_tenso
 
 # get_candidate 
 if args.train: 
-    get_candidate(train_question_embeddings, answer_embeddings, cids, 100, 'result', 'train')
-get_candidate(eval_question_embeddings, answer_embeddings, cids, 100, 'result', 'eval')
+    get_candidate(train_question_embeddings, answer_embeddings, cids, 100, args.saved_folder, 'train')
+get_candidate(eval_question_embeddings, answer_embeddings, cids, 100, args.saved_folder, 'eval')
 
 
