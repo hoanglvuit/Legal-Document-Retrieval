@@ -1,9 +1,10 @@
-from rank_bm25 import BM25Okapi,BM25L,BM25Plus
 import argparse
 import os
+import json
 import pandas as pd
 from tqdm import tqdm
 from src.utils import get_top_cids
+from rank_bm25 import BM25Okapi,BM25L,BM25Plus
 
 
 def load_data(input_folder): 
@@ -50,11 +51,15 @@ if __name__ == '__main__':
         tokenized_query = query.split(" ") 
         scores = list(model.get_scores(tokenized_query))
         prediction.append(scores)
-        
+
+    # save
     top_cids = get_top_cids(prediction, args.top_k, cids) 
-    output_path = os.path.join(args.output_path, 'output.txt')
+    output_path = os.path.join(args.output_folder, 'output.txt')
     with open(output_path, "w") as file:
         file.writelines(" ".join(map(str, sublist)) + "\n" for sublist in top_cids)
-
+    
+    config_path = os.path.join(args.output_folder, "config.json")
+    with open(config_path, "w", encoding="utf-8") as f:
+        json.dump(vars(args), f, indent=4, ensure_ascii=False)
 
 
