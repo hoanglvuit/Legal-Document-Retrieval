@@ -8,7 +8,7 @@ if __name__ == '__main__':
     parser.add_argument("--b", type=float, default=0.75) 
     parser.add_argument("--epsilon", type=float, default=0.25)
     parser.add_argument("--delta", type=float, default=0.5) 
-    parser.add_argument("--input_dirr")
+    parser.add_argument("--input_folder", type=str, default='data/processed')
 
 args = parser.parse_args() 
 

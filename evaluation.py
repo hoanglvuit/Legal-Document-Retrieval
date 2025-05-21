@@ -2,6 +2,7 @@ import os
 import argparse 
 import pandas as pd
 import ast
+import json
 from src.utils import exist_m, mrr_m
 
 if __name__ == "__main__": 
@@ -27,3 +28,22 @@ if __name__ == "__main__":
     # evaluate
     exist_score = exist_m(prediction, true_cids, args.top_e)
     mrr_m = mrr_m(prediction, true_cids, args.top_m)
+
+    # save 
+    dict_score = {
+        f'exist@{args.top_e}': exist_score,
+        f'mrr@{args.top_m}': mrr_m
+    }
+
+    path = os.path.join(os.path.dirname(os.path.abspath(args.pred_path)), 'score.json')
+
+    if os.path.exists(path):
+        with open(path, 'r', encoding='utf-8') as f:
+            old = json.load(f)
+    else:
+        old = {}
+
+    old.update(dict_score)
+
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(old, f, ensure_ascii=False, indent=2)
