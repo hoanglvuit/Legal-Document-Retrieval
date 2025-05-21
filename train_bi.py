@@ -24,19 +24,19 @@ def load_data(input_dir):
 
 if __name__ == "__main__": 
     parser = argparse.ArgumentParser(description="Train Bi Encoder") 
-    parser.add_argument("--input_dir", type=str, default="data/processed", help="Folder contain train.csv and eval.csv") 
+    parser.add_argument("--data_folder", type=str, default="data/processed", help="Folder contain train.csv and eval.csv") 
     parser.add_argument("--model", type=str, default= "bkai-foundation-models/vietnamese-bi-encoder") 
     parser.add_argument("--num_epochs", type=int, default=3) 
     parser.add_argument("--batch", type=int, default=32) 
     parser.add_argument("--lr", type=float, default=2e-5) 
     parser.add_argument('--weight_decay', type=float, default=0.01) 
-    parser.add_argument("--output_dir", type=str, default="saved_model/BiEncoder/model1")
+    parser.add_argument("--output_folder", type=str, default="saved_model/BiEncoder/model1")
 
     args = parser.parse_args()
     args_dict = vars(args)
 
     # Load data
-    train_question, train_answer, eval_question, eval_answer = load_data(args.input_dir)
+    train_question, train_answer, eval_question, eval_answer = load_data(args.data_folder)
 
     # Define dataset
     train_data = {'query': train_question, 'answer': train_answer} 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
     # Define hyperparameters
     train_args = SentenceTransformerTrainingArguments(
-        output_dir= args.output_dir, 
+        output_dir= args.output_folder, 
         num_train_epochs= args.num_epochs,
         per_device_train_batch_size= args.batch,
         per_device_eval_batch_size= args.batch,
@@ -84,6 +84,6 @@ if __name__ == "__main__":
     trainer.train()
 
     # save
-    model.save_pretrained(os.path.join(args.output_dir, 'best'))
-    with open(os.path.join(args.output_dir,'config.json'), 'w') as f: 
+    model.save_pretrained(os.path.join(args.output_folder, 'best'))
+    with open(os.path.join(args.output_folder,'config.json'), 'w') as f: 
         json.dump(args_dict, f, indent=4)

@@ -7,8 +7,8 @@ from src.utils import get_top_cids
 from rank_bm25 import BM25Okapi,BM25L,BM25Plus
 
 
-def load_data(input_folder): 
-    for dirpath, dirname, filenames in os.walk(input_folder): 
+def load_data(data_folder): 
+    for dirpath, dirname, filenames in os.walk(data_folder): 
         if 'corpus.csv' in filenames: 
             corpus_df = pd.read_csv(os.path.join(dirpath, 'corpus.csv'), encoding='utf-8') 
             document = corpus_df['text'].tolist()
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     parser.add_argument("--b", type=float, default=0.75) 
     parser.add_argument("--epsilon", type=float, default=0.25)
     parser.add_argument("--delta", type=float, default=0.5) 
-    parser.add_argument("--input_folder", type=str, default='data/processed')
+    parser.add_argument("--data_folder", type=str, default='data/processed')
     parser.add_argument("--top_k", type=int, default=100)
     parser.add_argument("--output_folder", type=str)
 
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     os.makedirs(args.output_folder, exist_ok=True)
 
     # load data
-    document, cids, eval_question, eval_cid = load_data(args.input_folder) 
+    document, cids, eval_question, eval_cid = load_data(args.data_folder) 
 
     # load model 
     tokenized_corpus = [doc.split(" ") for doc in document] 
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     output_path = os.path.join(args.output_folder, 'output.txt')
     with open(output_path, "w") as file:
         file.writelines(" ".join(map(str, sublist)) + "\n" for sublist in top_cids)
-    
+
     config_path = os.path.join(args.output_folder, "config.json")
     with open(config_path, "w", encoding="utf-8") as f:
         json.dump(vars(args), f, indent=4, ensure_ascii=False)

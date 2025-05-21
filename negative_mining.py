@@ -17,6 +17,7 @@ def load_data(data_folder):
             cids = corpus_df['cid'].tolist() 
     return train_question, train_cids, document, cids 
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Negative example mining, create negative csv fro cross train") 
     parser.add_argument('--type', type=str, default='moderate', choices=['moderate', 'hard', 'easy']) 
