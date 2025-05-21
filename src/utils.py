@@ -3,11 +3,11 @@ import os
 from sentence_transformers import SentenceTransformer, util
 
 
-def get_candidate(question_embedding, answer_embedding, cids, num, saved_folder):
+def get_candidate(question_embedding, answer_embedding, cids, num, saved_folder, name):
     tensor = util.cos_sim(question_embedding, answer_embedding) 
     _, top_indices = torch.topk(tensor, num, dim=1)
     top_cids = [[cids[i] for i in indices] for indices in top_indices.cpu().tolist()]
-    output_path = os.path.join(saved_folder, "output.txt")
+    output_path = os.path.join(saved_folder, f"output{name}.txt")
     with open(output_path, "w") as file:
         file.writelines(" ".join(map(str, sublist)) + "\n" for sublist in top_cids)
 
