@@ -2,6 +2,7 @@ from rank_bm25 import BM25Okapi,BM25L,BM25Plus
 import argparse
 import os
 import pandas as pd
+from tqdm import tqdm
 from src.utils import get_top_cids
 
 
@@ -44,15 +45,16 @@ if __name__ == '__main__':
         model = BM25Plus(tokenized_corpus, k1= args.k1, b= args.b, delta= args.delta) 
     
     # query 
-    prediction = [] 
-    for query in eval_question: 
+    prediction = []
+    for query in tqdm(eval_question, desc="Processing queries"):
         tokenized_query = query.split(" ") 
         scores = list(model.get_scores(tokenized_query))
         prediction.append(scores)
+        
     top_cids = get_top_cids(prediction, args.top_k, cids) 
     output_path = os.path.join(args.output_path, 'output.txt')
     with open(output_path, "w") as file:
         file.writelines(" ".join(map(str, sublist)) + "\n" for sublist in top_cids)
-    
+
 
 
