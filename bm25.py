@@ -37,7 +37,7 @@ if __name__ == '__main__':
     document, cids, eval_question, eval_cid = load_data(args.data_folder) 
 
     # load model 
-    tokenized_corpus = [doc.split(" ") for doc in document] 
+    tokenized_corpus = [[token.lower() for token in doc.split(" ")] for doc in document] 
     if args.model == 'bm25o': 
         model = BM25Okapi(tokenized_corpus, k1= args.k1, b= args.b, epsilon= args.epsilon) 
     elif args.model == 'bm25l': 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     # query 
     prediction = []
     for query in tqdm(eval_question, desc="Processing queries"):
-        tokenized_query = query.split(" ") 
+        tokenized_query = [token.lower() for token in query.split(" ")] 
         scores = list(model.get_scores(tokenized_query))
         prediction.append(scores)
 
