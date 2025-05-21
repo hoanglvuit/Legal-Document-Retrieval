@@ -10,6 +10,7 @@ def get_candidate(question_embedding, answer_embedding, cids, num, saved_folder,
     output_path = os.path.join(saved_folder, f"output{name}.txt")
     with open(output_path, "w") as file:
         file.writelines(" ".join(map(str, sublist)) + "\n" for sublist in top_cids)
+    return top_cids
 
 #test get_candidate
 # sentence1 = ["Cô ấy là người tốt", "Cô ấy rất xinh đẹp", "Tôi yêu cô ấy"] 
@@ -20,3 +21,31 @@ def get_candidate(question_embedding, answer_embedding, cids, num, saved_folder,
 # embeddings2 = model.encode(sentence2, convert_to_tensor=True)
 # get_candidate(embeddings1, embeddings2, [1,2,3,4,5,6,7,8], 1, '.')
 
+def exist_m(prediction, true_cids, m=10): 
+    assert len(prediction) == len(true_cids), "Must same length"
+    num_exist = 0 
+    for pred_cids, true_cids in zip(prediction, true_cids): 
+        pred_cids = pred_cids[:m] 
+        num_exist += any(item in set(true_cids) for item in pred_cids) 
+    exist_score = num_exist/len(prediction)
+    print(f"Exist@{m} = {exist_score}") 
+    return exist_score
+
+def mrr_m(prediction, true_cids, m=10): 
+    assert len(prediction) == len(true_cids), "Must same length"
+    mrr_num = 0 
+    for pred_cids, true_cids in zip(prediction, true_cids): 
+        pred_cids = pred_cids[:m] 
+        for ind, cid in enumerate(pred_cids): 
+            if cid in true_cids: 
+                mrr_num += 1/(ind+1) 
+                break
+    mrr_score = mrr_num / len(prediction)
+    print(f"MRR@{m} = {mrr_score}") 
+    return mrr_score
+
+# test 
+# A = [[1,2,3,4],[3,4,2,1],[10,4,2,1,4,5]] 
+# B = [[5,2],[0,6],[10,5]] 
+# exist_m(A,B) 
+# mrr_m(A,B)
