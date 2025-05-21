@@ -1,6 +1,7 @@
 import os 
 import argparse 
 import pandas as pd
+import ast
 from src.utils import exist_m, mrr_m
 
 if __name__ == "__main__": 
@@ -21,7 +22,7 @@ if __name__ == "__main__":
     
     #load true label
     df = pd.read_csv(args.true_path, encoding='utf-8') 
-    true_cids = df['cid'].tolist() 
+    true_cids = df['cid'].apply(ast.literal_eval).tolist() 
 
     # evaluate
     exist_score = exist_m(prediction, true_cids, args.top_e)
