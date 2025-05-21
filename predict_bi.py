@@ -5,7 +5,7 @@ import json
 import torch
 import pandas as pd
 from sentence_transformers import SentenceTransformer
-from .utils import get_candidate
+from src.utils import get_candidate
 
 
 def load_data(path):
@@ -20,13 +20,13 @@ def encode_texts(model, texts, device):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run prediction using the Bi Encoder model")
-    parser.add_argument("model_path", type=str)
-    parser.add_argument("--corpus_path", type=str, default="../data/processed/corpus.csv")
+    parser.add_argument("--model_path", type=str)
+    parser.add_argument("--corpus_path", type=str, default="data/processed/corpus.csv")
     parser.add_argument("--train", action="store_true", help="Whether to evaluate on training data")
-    parser.add_argument("--train_path", type=str, default="../data/processed/train.csv")
-    parser.add_argument("--eval_path", type=str, default="../data/processed/eval.csv")
+    parser.add_argument("--train_path", type=str, default="data/processed/train.csv")
+    parser.add_argument("--eval_path", type=str, default="data/processed/eval.csv")
     parser.add_argument("--top_k", type=int, default=100)
-    parser.add_argument("saved_folder", type=str, default='../result/BiEncoder/model1')
+    parser.add_argument("--saved_folder", type=str, default='result/BiEncoder/model1')
 
     args = parser.parse_args()
     os.makedirs(args.saved_folder, exist_ok=True)
