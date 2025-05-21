@@ -6,6 +6,7 @@ from sentence_transformers import SentenceTransformer, SentenceTransformerTraine
 from datasets import Dataset,load_dataset
 import argparse
 import os
+import json
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
@@ -28,17 +29,17 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=32) 
     parser.add_argument("--lr", type=float, default=2e-5) 
     parser.add_argument('--weight_decay', type=float, default=0.01) 
-    parser.add_argument("--output_dir", type=str, default="../saved_model/BiEncoder")
+    parser.add_argument("--output_dir", type=str, default="../saved_model/BiEncoder/model1")
 
 args = parser.parse_args()
+args_dict = vars(args)
+
 # Load data
 train_question, train_answer, eval_question, eval_answer = load_data(args.input_dir)
 
 # Define dataset
-train_data = {'query': train_question,
-                'answer': train_answer} 
-eval_data = {'query': eval_question, 
-                'answer': eval_answer} 
+train_data = {'query': train_question, 'answer': train_answer} 
+eval_data = {'query': eval_question, 'answer': eval_answer} 
 train_dataset = Dataset.from_dict(train_data).shuffle(seed=28)
 eval_dataset = Dataset.from_dict(eval_data)
 
@@ -80,4 +81,8 @@ trainer = SentenceTransformerTrainer(
 )
 
 trainer.train()
+
+# save
 model.save_pretrained(os.path.join(args.output_dir, 'best'))
+with open(os.path.join(args.output_dir,'config.json'), 'w') as f: 
+    json.dump(args_dict, f, indent=4)
