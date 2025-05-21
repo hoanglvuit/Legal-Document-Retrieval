@@ -11,7 +11,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
 def load_data(input_dir): 
-    print(input_dir)
     train_df, eval_df = None, None
     for dirpath, dirname, filenames in os.walk(input_dir): 
         if "train.csv" in filenames: 
