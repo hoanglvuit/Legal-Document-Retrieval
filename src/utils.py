@@ -4,13 +4,22 @@ from sentence_transformers import SentenceTransformer, util
 from typing import List
 
 
+def get_top_cids(score_pred: List[List[float]], num:int, cids: List[int]): 
+    top_indices_per_row = []
+    for row in score_pred:
+        top_indices = [i for i, _ in sorted(enumerate(row), key=lambda x: x[1], reverse=True)[:num]]
+        top_indices_per_row.append(top_indices)
+    top_cids = [[cids[i] for i in pred] for pred in top_indices_per_row]
+    return top_cids
+
+
 def get_candidate(question_embedding, answer_embedding, cids, num, saved_folder, name):
     '''
-        Description: Get num candidates and save result in saved_folder with name
+        Description: Get num candidates for BiEncoder from embedding and save result in saved_folder with name
     '''
     tensor = util.cos_sim(question_embedding, answer_embedding) 
-    _, top_indices = torch.topk(tensor, num, dim=1)
-    top_cids = [[cids[i] for i in indices] for indices in top_indices.cpu().tolist()]
+    top_cids = get_top_cids(tensor.cpu().tolist(), num, cids)
+    
     output_path = os.path.join(saved_folder, f"output{name}.txt")
     with open(output_path, "w") as file:
         file.writelines(" ".join(map(str, sublist)) + "\n" for sublist in top_cids)
