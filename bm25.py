@@ -14,7 +14,7 @@ def load_data(data_folder):
             document = corpus_df['text'].tolist()
             cids = corpus_df['cid'].tolist()
         if 'eval.csv' in filenames: 
-            eval_df = pd.read_csv(os.path.join(dirpath, 'eval.csv'), encoding = 'utf-8') 
+            eval_df = pd.read_csv(os.path.join(dirpath, 'eval.csv'), encoding = 'utf-8', nrows=2000) 
             eval_question = eval_df['question'].tolist()
             eval_cid = eval_df['cid'].tolist()
     return document, cids, eval_question, eval_cid
