@@ -11,7 +11,7 @@ def get_top_cids(score_pred: List[List[float]], num:int, cids: List[int]):
     top_cids = [[cids[i] for i in pred] for pred in top_indices_per_row]
     return top_cids
 
-def get_candidate(question_embedding, answer_embedding, cids, num, saved_folder, name, batch_size=64):
+def get_candidate(question_embedding, answer_embedding, cids, num, saved_folder, name, batch_size=512):
     '''
         Batched version of candidate retrieval to avoid CUDA OOM.
         Computes cosine similarity in batches.
