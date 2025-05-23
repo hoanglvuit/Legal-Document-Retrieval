@@ -69,8 +69,3 @@ if __name__ == "__main__":
     corpus_df['text'] = corpus_df['text'].progress_apply(tokenize)
     saved_corpus_path = os.path.join(proc_path, 'corpus.csv')
     corpus_df.to_csv(saved_corpus_path, index=False)
-
-
-
-
-      

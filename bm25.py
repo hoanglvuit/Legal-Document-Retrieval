@@ -61,5 +61,3 @@ if __name__ == '__main__':
     config_path = os.path.join(args.output_folder, "config.json")
     with open(config_path, "w", encoding="utf-8") as f:
         json.dump(vars(args), f, indent=4, ensure_ascii=False)
-
-

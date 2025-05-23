@@ -1,6 +1,5 @@
 import random 
 
-
 def ran_negative(pred_cids, true_cids, neg_num, seed=28): 
     random.seed(seed)
     assert len(pred_cids) == len(true_cids), "Must same length" 
@@ -19,5 +18,3 @@ def hard_negative(pred_cids, true_cids, neg_num):
         neg_cid = neg_cid[:neg_num] 
         neg_cids.append(neg_cid) 
     return neg_cids
-
-
