@@ -21,9 +21,9 @@ def load_data(data_folder):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Negative example mining, create negative csv fro cross train") 
     parser.add_argument('--type', type=str, default='moderate', choices=['moderate', 'hard', 'easy']) 
-    parser.add_argument('--data_folder', type=str, default='data/precessed') 
+    parser.add_argument('--data_folder', type=str, default='data/processed') 
     parser.add_argument('--pred_file', type=str, default='result/BiEncoder/model1/outputtrain.txt')
-    parser.add_argument('--neg_num', type=int, default=2,help= "The number of negative example need")
+    parser.add_argument('--neg_num', type=int, default=3,help= "The number of negative example need")
     parser.add_argument('--seed', type=int, default=22520465)
 
     args = parser.parse_args()
