@@ -1,8 +1,7 @@
 import torch
 import os
-from sentence_transformers import SentenceTransformer, util
+from sentence_transformers import util
 from typing import List
-
 
 def get_top_cids(score_pred: List[List[float]], num:int, cids: List[int]): 
     top_indices_per_row = []
@@ -12,18 +11,42 @@ def get_top_cids(score_pred: List[List[float]], num:int, cids: List[int]):
     top_cids = [[cids[i] for i in pred] for pred in top_indices_per_row]
     return top_cids
 
-
-def get_candidate(question_embedding, answer_embedding, cids, num, saved_folder, name):
+def get_candidate(question_embedding, answer_embedding, cids, num, saved_folder, name, batch_size=64):
     '''
-        Description: Get num candidates for BiEncoder from embedding and save result in saved_folder with name
+        Batched version of candidate retrieval to avoid CUDA OOM.
+        Computes cosine similarity in batches.
     '''
-    tensor = util.cos_sim(question_embedding, answer_embedding) 
-    top_cids = get_top_cids(tensor.cpu().tolist(), num, cids)
-    
+    all_top_cids = []
     output_path = os.path.join(saved_folder, f"output{name}.txt")
+    
+    # Move answer_embedding to CPU if too big for GPU or keep on GPU if you want speed
+    answer_embedding = answer_embedding.to('cuda' if torch.cuda.is_available() else 'cpu')
+    
     with open(output_path, "w") as file:
-        file.writelines(" ".join(map(str, sublist)) + "\n" for sublist in top_cids)
-    return top_cids
+        for start_idx in range(0, question_embedding.size(0), batch_size):
+            end_idx = min(start_idx + batch_size, question_embedding.size(0))
+            batch_questions = question_embedding[start_idx:end_idx].to(answer_embedding.device)
+
+            # Compute similarity for batch
+            sim = util.cos_sim(batch_questions, answer_embedding)  # shape: (batch_size, num_answers)
+            
+            # Move to CPU and convert to list for get_top_cids
+            sim_cpu = sim.cpu().tolist()
+
+            # Get top cids for this batch
+            batch_top_cids = get_top_cids(sim_cpu, num, cids)
+            all_top_cids.extend(batch_top_cids)
+
+            # Write batch results to file
+            for sublist in batch_top_cids:
+                file.write(" ".join(map(str, sublist)) + "\n")
+
+            # Free GPU cache if needed
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+
+    return all_top_cids
+
 
 #test get_candidate
 # sentence1 = ["Cô ấy là người tốt", "Cô ấy rất xinh đẹp", "Tôi yêu cô ấy"] 
