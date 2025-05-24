@@ -30,7 +30,7 @@ if __name__ == '__main__':
     else: 
         os.makedirs(args.database) 
         answer_embeddings = bi_model.encode(documents, show_progress_bar=True, convert_to_tensor=True, device=device)
-        np.save(os.path.join(args.database, 'database.npy'), answer_embeddings)
+        np.save(os.path.join(args.database, 'database.npy'), answer_embeddings.cpu().numpy())
 
     query_embedding = bi_model.encode([args.question]) 
     similarities = cosine_similarity(query_embedding, answer_embeddings)[0]
