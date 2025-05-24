@@ -40,7 +40,7 @@ Pipeline của chúng tôi gồm 2 bước:
 
 ## 🚀 Reproduce
 
-### 1. Xử lý dữ liệu:
+### 1. Data processing:
 
 ```bash
 $python data_processing.py 
@@ -73,3 +73,22 @@ $python train_cross.py
 ```bash
 $python predict_cross.py 
 ``` 
+## 🚀 Hướng dẫn sử dụng
+
+Do kích thước mô hình và cơ sở dữ liệu khá lớn, bạn cần tải thủ công các tệp từ liên kết sau:  
+🔗 [Tải xuống tại đây](https://drive.google.com/drive/folders/1pWYtYJBIAoI6O_LrThFVANYQQs8a7W7O?usp=sharing)
+
+Sau khi tải về, vui lòng thay thế các thư mục gốc của dự án bằng các thư mục tương ứng:  
+- `data`  
+- `result`  
+- `saved_model`
+
+Tiếp theo, bạn có thể đặt câu hỏi liên quan đến pháp luật Việt Nam bằng cách sử dụng dòng lệnh như sau:
+
+```bash
+$ python run.py "Tội bán hàng giả bị xử lý như thế nào?"
+``` 
+## 📬 Liên hệ
+
+Nếu bạn có bất kỳ thắc mắc hoặc góp ý nào, vui lòng liên hệ qua email:  
+📧 [22520465@gm.uit.edu.vn](mailto:22520465@gm.uit.edu.vn)
