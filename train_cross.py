@@ -53,7 +53,7 @@ if __name__ == '__main__':
     # save model and config
     model.save_pretrained(args.output_folder)
     args_dict = vars(args) 
-    with open(os.path.join(args.output_folder, 'config.json'), 'w') as f: 
+    with open(os.path.join(args.output_folder, 'config_args.json'), 'w') as f: 
         json.dump(args_dict, f, indent=4)
 
 

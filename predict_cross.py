@@ -4,6 +4,7 @@ import argparse
 import pandas as pd 
 from tqdm import tqdm
 from src.utils import get_top_cids
+import logging
 
 if __name__ == '__main__': 
     parser = argparse.ArgumentParser(description="Reranking by Cross Encoder") 
@@ -32,6 +33,7 @@ if __name__ == '__main__':
     # load model 
     model = CrossEncoder(args.model, max_length=256) 
     model.model.half()
+    logging.disable(logging.WARNING)
 
     # implement 
     score_pred = []
@@ -42,11 +44,17 @@ if __name__ == '__main__':
         scores = model.predict(pairs) 
         score_pred.append(scores) 
     
-    top_cids = get_top_cids(score_pred, args.num, cids) 
+    # sort 
+    sorted_cids = []
+    for cid_list, score_list in zip(pred_cids, score_pred):
+        # Kết hợp rồi sắp xếp giảm dần theo score
+        sorted_pair = sorted(zip(cid_list, score_list), key=lambda x: x[1], reverse=True)
+        # Tách lại phần cid sau khi sắp
+        sorted_cids.append([cid for cid, score in sorted_pair])
     
     # save 
     with open(os.path.join(args.output_folder,'output.txt'), "w") as f:
-        for sublist in top_cids:
+        for sublist in sorted_cids:
             line = ' '.join(map(str, sublist)) 
             f.write(line + '\n')  
 
