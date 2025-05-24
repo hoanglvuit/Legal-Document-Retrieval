@@ -40,7 +40,7 @@ Pipeline của chúng tôi gồm 2 bước:
 
 ## 🚀 Reproduce
 
-### 1. Xử lý dữ liệu:
+### 1. Data processing:
 
 ```bash
 $python data_processing.py 
