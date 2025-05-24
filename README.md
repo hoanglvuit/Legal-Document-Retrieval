@@ -86,7 +86,7 @@ Sau khi tải về, vui lòng thay thế các thư mục gốc của dự án b�
 Tiếp theo, bạn có thể đặt câu hỏi liên quan đến pháp luật Việt Nam bằng cách sử dụng dòng lệnh như sau:
 
 ```bash
-$ python run.py "Tội bán hàng giả bị xử lý như thế nào?"
+$ python run.py --question "Tội bán hàng giả bị xử lý như thế nào?"
 ``` 
 ## 📬 Liên hệ
 
