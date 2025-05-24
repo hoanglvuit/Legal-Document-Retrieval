@@ -13,7 +13,7 @@ if __name__ == '__main__':
     parser.add_argument('--database', type=str, default= 'data/database') 
     parser.add_argument('--bi_path', type=str, default= 'saved_model/BiEncoder/model1/best')
     parser.add_argument('--cross_path', type=str, default= 'saved_model/CrossEncoder/model1')
-    parser.add_argument('corpus_path', type=str, default= 'data/processed/corpus.csv')
+    parser.add_argument('--corpus_path', type=str, default= 'data/processed/corpus.csv')
     args = parser.parse_args()
 
     # load BiEncoder 
