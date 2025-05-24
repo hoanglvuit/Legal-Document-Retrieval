@@ -23,7 +23,6 @@ if __name__ == '__main__':
     # load data 
     corpus = pd.read_csv(args.corpus_path, encoding='utf-8') 
     documents = corpus['text'].tolist()
-<<<<<<< HEAD
 
     # database 
     if os.path.isdir(args.database): 
@@ -36,18 +35,6 @@ if __name__ == '__main__':
         query_embedding = bi_model.encode([args.question]).cpu().numpy()
     else: 
         query_embedding = bi_model.encode([args.question])
-=======
-
-    # database 
-    if os.path.isdir(args.database): 
-        answer_embeddings = np.load(os.path.join(args.database, 'database.npy'))
-    else: 
-        os.makedirs(args.database) 
-        answer_embeddings = bi_model.encode(documents, show_progress_bar=True, convert_to_tensor=True, device=device)
-        np.save(os.path.join(args.database, 'database.npy'), answer_embeddings.cpu().numpy())
-
-    query_embedding = bi_model.encode([args.question]) 
->>>>>>> ec9005ddefcae3b7b4cf70f4c0a584eca7412f1a
     similarities = cosine_similarity(query_embedding, answer_embeddings)[0]
     top_inds = sorted(range(len(similarities)), key=lambda i: similarities[i], reverse=True)[:50]
     retrieval_docs = [documents[i] for i in top_inds]
