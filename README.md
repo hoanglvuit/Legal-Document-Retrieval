@@ -38,22 +38,38 @@ Pipeline của chúng tôi gồm 2 bước:
 - Phương pháp **không dùng ensemble** nhưng vẫn đạt hiệu quả cao.
 - Dễ dàng **mở rộng** cho các dataset khác chỉ có dạng QA.
 
-## 🚀 Hướng dẫn Reproduce
+## 🚀 Reproduce
 
 ### 1. Xử lý dữ liệu:
 
 ```bash
-$python data_processing.py
+$python data_processing.py 
 ``` 
 
-### 2. Huấn luyện bước Retrieval:
+### 2. Train BiEncoder: 
 ```bash
 $python train_bi.py
-#$python bm25.py (Tuỳ chọn) Thử nghiệm BM25:
+#$python bm25.py (Optinal) Thử nghiệm BM25:
 ``` 
-### 3. Đánh giá Retrieval model:
+### 3. Retrieval candiates: 
 
 ```bash
 $python predict_bi.py --train
-$python evaluation.py 
 ```
+### 4. Get negative examples for CrossEncoder training: 
+
+```bash
+$python negative_mining.py 
+``` 
+
+### 5. Train CrossEncoder
+
+```bash
+$python train_cross.py
+``` 
+
+### 6. Re-rank candidates by CrossEncoder: 
+
+```bash
+$python predict_cross.py 
+``` 
