@@ -38,6 +38,14 @@ Pipeline của chúng tôi gồm 2 bước:
 - Phương pháp **không dùng ensemble** nhưng vẫn đạt hiệu quả cao.
 - Dễ dàng **mở rộng** cho các dataset khác chỉ có dạng QA.
 
+Do kích thước mô hình và cơ sở dữ liệu khá lớn, bạn cần tải thủ công các tệp từ liên kết sau:  
+🔗 [Tải xuống tại đây](https://drive.google.com/drive/folders/1pWYtYJBIAoI6O_LrThFVANYQQs8a7W7O?usp=sharing)
+
+Sau khi tải về, vui lòng thay thế các thư mục gốc của dự án bằng các thư mục tương ứng:  
+- `data`  
+- `result`  
+- `saved_model`
+
 ## 🚀 Reproduce
 
 ### 1. Data processing:
@@ -75,15 +83,7 @@ $python predict_cross.py
 ``` 
 ## 🚀 Hướng dẫn sử dụng
 
-Do kích thước mô hình và cơ sở dữ liệu khá lớn, bạn cần tải thủ công các tệp từ liên kết sau:  
-🔗 [Tải xuống tại đây](https://drive.google.com/drive/folders/1pWYtYJBIAoI6O_LrThFVANYQQs8a7W7O?usp=sharing)
-
-Sau khi tải về, vui lòng thay thế các thư mục gốc của dự án bằng các thư mục tương ứng:  
-- `data`  
-- `result`  
-- `saved_model`
-
-Tiếp theo, bạn có thể đặt câu hỏi liên quan đến pháp luật Việt Nam bằng cách sử dụng dòng lệnh như sau:
+Bạn có thể đặt câu hỏi liên quan đến pháp luật Việt Nam bằng cách sử dụng dòng lệnh như sau:
 
 ```bash
 $ python run.py --question "Tội bán hàng giả bị xử lý như thế nào?"
