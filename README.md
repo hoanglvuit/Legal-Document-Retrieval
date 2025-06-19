@@ -23,8 +23,8 @@ Pipeline của chúng tôi gồm 2 bước:
 1. **Retrieval** — sử dụng Bi-Encoder: [`vietnamese-bi-encoder`](https://huggingface.co/models)
 2. **Re-ranking** — sử dụng Cross-Encoder: [`itdainb/PhoRanker`](https://huggingface.co/itdainb/PhoRanker)
 
-![Training workflow](images\training-1.png)
-![Inference](images\inference-1.png)
+![Training workflow](images/training-1.png)
+![Inference](images/inference-1.png)
 
 
 ### Chi tiết:
