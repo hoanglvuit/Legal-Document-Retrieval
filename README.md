@@ -1,6 +1,6 @@
 # Legal Document Retrieval - SoICT Hackathon 2024
 
-Đây là solution đạt **Top 3** tại cuộc thi [Legal Document Retrieval - SoICT Hackathon 2024](https://aihub.ml/competitions/715#results), với **MRR@10 = 0.7754** trên tập **private test**.
+Đây là solution đạt **Top 3** tại cuộc thi [Legal Document Retrieval - SoICT Hackathon 2024](https://aihub.ml/competitions/715#results), với **MRR@10 = 0.7754** trên tập **private test**. Link [paper](https://arxiv.org/pdf/2507.14619)
 
 ## 🧾 Nhiệm vụ
 
