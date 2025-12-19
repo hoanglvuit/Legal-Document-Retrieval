@@ -1,0 +1,13 @@
+# Inference Configuration
+
+bi_model_path: "saved_models/BiEncoder/model1/best"
+cross_model_path: "saved_models/CrossEncoder/model1"
+corpus_path: "data/processed/corpus.csv"
+database_path: "data/database"
+
+retrieval:
+  top_k: 50
+
+reranking:
+  top_k: 5
+

@@ -1,0 +1,20 @@
+# Bi-Encoder Training Configuration
+
+model_name: "bkai-foundation-models/vietnamese-bi-encoder"
+data_folder: "data/processed"
+output_folder: "saved_models/BiEncoder/model1"
+
+training:
+  num_epochs: 3
+  batch_size: 32
+  learning_rate: 2e-5
+  weight_decay: 0.01
+
+evaluation:
+  eval_strategy: "epoch"
+  metric_for_best_model: "eval_loss"
+
+hardware:
+  fp16: true
+  bf16: false
+

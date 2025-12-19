@@ -1,0 +1,14 @@
+# Cross-Encoder Training Configuration
+
+model_name: "itdainb/PhoRanker"
+max_length: 256
+pos_path: "data/processed/train.csv"
+neg_path: "data/processed/3_moderateneg_ex.csv"
+output_folder: "saved_models/CrossEncoder/model1"
+
+training:
+  num_epochs: 2
+  batch_size: 64
+  learning_rate: 2e-5
+  warmup_steps: 0
+
