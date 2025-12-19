@@ -1,5 +1,13 @@
 """Process raw data into training format"""
 
+import sys
+from pathlib import Path
+
+# Thêm thư mục gốc vào Python path để có thể import legal_retrieval
+project_root = Path(__file__).parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
 import argparse
 from legal_retrieval.data.processor import DataProcessor
 
@@ -22,4 +30,3 @@ if __name__ == "__main__":
         eval_size=args.eval_size,
         random_state=args.random_state
     )
-
