@@ -1,5 +1,5 @@
 venv/
-data/
+/data/
 saved_model/
 result/
 __pycache__/

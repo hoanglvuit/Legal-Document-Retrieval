@@ -1,0 +1,5 @@
+[console_scripts]
+legal-retrieval-predict-bi = scripts.predict_bi:main
+legal-retrieval-predict-cross = scripts.predict_cross:main
+legal-retrieval-train-bi = scripts.train_bi:main
+legal-retrieval-train-cross = scripts.train_cross:main

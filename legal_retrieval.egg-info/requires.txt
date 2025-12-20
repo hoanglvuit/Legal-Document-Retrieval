@@ -1,0 +1,9 @@
+datasets
+pandas
+pyvi
+rank_bm25
+scikit_learn
+sentence_transformers
+torch
+tqdm
+pyyaml
