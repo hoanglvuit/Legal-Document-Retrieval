@@ -5,10 +5,10 @@ data_folder: "data/processed"
 output_folder: "saved_models/BiEncoder/model1"
 
 training:
-  num_epochs: 3
-  batch_size: 32
-  learning_rate: 2e-5
-  weight_decay: 0.01
+  num_epochs: 10
+  batch_size: 64
+  learning_rate: 4e-5
+  weight_decay: 0.02
 
 evaluation:
   eval_strategy: "epoch"

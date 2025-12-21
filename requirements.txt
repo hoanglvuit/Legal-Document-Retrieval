@@ -7,3 +7,4 @@ sentence_transformers
 torch
 tqdm
 pyyaml
+accelerate

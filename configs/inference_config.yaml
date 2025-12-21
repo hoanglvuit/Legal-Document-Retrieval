@@ -9,5 +9,5 @@ retrieval:
   top_k: 50
 
 reranking:
-  top_k: 5
+  top_k: 10
 

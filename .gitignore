@@ -1,8 +1,6 @@
 venv/
 /data/
-saved_model/
-result/
+saved_models/
+results/
 __pycache__/
-MIGRATION_GUIDE.md
-README_NEW_STRUCTURE.md
-STRUCTURE_SUMMARY.md
+/checkpoints/
